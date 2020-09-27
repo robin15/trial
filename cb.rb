@@ -2,8 +2,8 @@
 
 require 'win32/clipboard'
 
-ENV['PATH'] = 'C:\Ruby23-x64\work\clipboard\test'
 p path = ENV['PATH']
+ENV['PATH'] = path + ';C:\Ruby23-x64\work\clipboard\test'
 
 p cp = Win32::Clipboard.data # クリップボードのデータを取得 
 
