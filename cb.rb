@@ -1,11 +1,13 @@
 #need to execute "gem install win32-clipboard" in advance.
 
+#//DOCUMENT/設計情報//aaa.doc
+
 require 'win32/clipboard'
 
 p path = ENV['PATH']
 ENV['PATH'] = path + ';C:\Ruby23-x64\work\clipboard\test'
 
-p cp = Win32::Clipboard.data # クリップボードのデータを取得 
+puts cp = Win32::Clipboard.data.force_encoding(Encoding::Shift_JIS) # クリップボードのデータを取得 
 
 if cp.include?("aaaaa")
   server = "aaaaaa"
@@ -20,8 +22,8 @@ end
 
 system("echo \%PATH\%")
 p cmd = "p4v -p " + server + ":" + port + "-s " + cp
-
-if system('start test.html') == nil
+cmd.force_encoding(Encoding::Shift_JIS)
+if system('exe_html.exe') == nil
     puts "error command."
 end
 
