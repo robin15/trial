@@ -1,46 +1,38 @@
-# git ƒuƒ‰ƒ“ƒ`–¼‚ğF•t‚«‚Å•\¦‚³‚¹‚éƒƒ\ƒbƒh
-function rprompt-git-current-branch {
-  local branch_name st branch_status
- 
-  if [ ! -e  ".git" ]; then
-    # git ŠÇ—‚³‚ê‚Ä‚¢‚È‚¢ƒfƒBƒŒƒNƒgƒŠ‚Í‰½‚à•Ô‚³‚È‚¢
-    return
-  fi
-  branch_name=`git rev-parse --abbrev-ref HEAD 2> /dev/null`
-  st=`git status 2> /dev/null`
-  if [[ -n `echo "$st" | grep "^nothing to"` ]]; then
-    # ‘S‚Ä commit ‚³‚ê‚ÄƒNƒŠ[ƒ“‚Èó‘Ô
-    branch_status="%F{green}"
-  elif [[ -n `echo "$st" | grep "^Untracked files"` ]]; then
-    # git ŠÇ—‚³‚ê‚Ä‚¢‚È‚¢ƒtƒ@ƒCƒ‹‚ª‚ ‚éó‘Ô
-    branch_status="%F{red}?"
-  elif [[ -n `echo "$st" | grep "^Changes not staged for commit"` ]]; then
-    # git add ‚³‚ê‚Ä‚¢‚È‚¢ƒtƒ@ƒCƒ‹‚ª‚ ‚éó‘Ô
-    branch_status="%F{red}+"
-  elif [[ -n `echo "$st" | grep "^Changes to be committed"` ]]; then
-    # git commit ‚³‚ê‚Ä‚¢‚È‚¢ƒtƒ@ƒCƒ‹‚ª‚ ‚éó‘Ô
-    branch_status="%F{yellow}!"
-  elif [[ -n `echo "$st" | grep "^rebase in progress"` ]]; then
-    # ƒRƒ“ƒtƒŠƒNƒg‚ª‹N‚±‚Á‚½ó‘Ô
-    echo "%F{red}!(no branch)"
-    return
-  else
-    # ã‹LˆÈŠO‚Ìó‘Ô‚Ìê‡
-    branch_status="%F{blue}"
-  fi
-  # ƒuƒ‰ƒ“ƒ`–¼‚ğF•t‚«‚Å•\¦‚·‚é
-  echo "${branch_status}[$branch_name]"
+# install CascadiaCodePL.ttf
+# https://tomiylab.com/2020/03/prompt/
+# ----- PROMPT -----
+## PROMPT
+export CLICOLOR=1
+
+echo hello.
+
+autoload -Uz compinit && compinit  # Gitã®è£œå®Œã‚’æœ‰åŠ¹åŒ–
+
+function left-prompt {
+  name_t='179m%}'      # user name text clolr
+  name_b='000m%}'    # user name background color
+  path_t='255m%}'     # path text clolr
+  path_b='031m%}'   # path background color
+  arrow='087m%}'   # arrow color
+  text_color='%{\e[38;5;'    # set text color
+  back_color='%{\e[30;48;5;' # set background color
+  reset='%{\e[0m%}'   # reset
+  sharp='\uE0B0'      # triangle
+  
+  user="${back_color}${name_b}${text_color}${name_t}"
+  dir="${back_color}${path_b}${text_color}${path_t}"
+#  echo "${user}%n%#@%m${back_color}${path_b}${text_color}${name_b}${sharp} ${dir}%~${reset}${text_color}${path_b}${sharp}${reset}\n${text_color}${arrow}â†’ ${reset}"
+  echo "${user}%n%#@%m${back_color}${path_b}${text_color}${name_b}${sharp} ${dir}%~${reset}${text_color}${path_b}${sharp}${reset}"
 }
- 
-# ƒvƒƒ“ƒvƒg‚ª•\¦‚³‚ê‚é‚½‚Ñ‚Éƒvƒƒ“ƒvƒg•¶š—ñ‚ğ•]‰¿A’uŠ·‚·‚é
-setopt prompt_subst
- 
-# git ƒuƒ‰ƒ“ƒ`–¼‚ğF•t‚«‚Å•\¦‚³‚¹‚éƒƒ\ƒbƒh
+
+PROMPT=`left-prompt` 
+
+# git ãƒ–ãƒ©ãƒ³ãƒåã‚’è‰²ä»˜ãã§è¡¨ç¤ºã•ã›ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰
 function rprompt-git-current-branch {
   local branch_name st branch_status
   
   branch='\ue0a0'
-  color='%{\e[38;5;' #  •¶šF‚ğİ’è
+  color='%{\e[38;5;' #  æ–‡å­—è‰²ã‚’è¨­å®š
   green='114m%}'
   red='001m%}'
   yellow='227m%}'
@@ -48,39 +40,39 @@ function rprompt-git-current-branch {
   reset='%{\e[0m%}'   # reset
   
   if [ ! -e  ".git" ]; then
-    # git ŠÇ—‚³‚ê‚Ä‚¢‚È‚¢ƒfƒBƒŒƒNƒgƒŠ‚Í‰½‚à•Ô‚³‚È‚¢
+    # git ç®¡ç†ã•ã‚Œã¦ã„ãªã„ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã¯ä½•ã‚‚è¿”ã•ãªã„
     return
   fi
   branch_name=`git rev-parse --abbrev-ref HEAD 2> /dev/null`
   st=`git status 2> /dev/null`
   if [[ -n `echo "$st" | grep "^nothing to"` ]]; then
-    # ‘S‚Ä commit ‚³‚ê‚ÄƒNƒŠ[ƒ“‚Èó‘Ô
+    # å…¨ã¦ commit ã•ã‚Œã¦ã‚¯ãƒªãƒ¼ãƒ³ãªçŠ¶æ…‹
     branch_status="${color}${green}${branch}"
   elif [[ -n `echo "$st" | grep "^Untracked files"` ]]; then
-    # git ŠÇ—‚³‚ê‚Ä‚¢‚È‚¢ƒtƒ@ƒCƒ‹‚ª‚ ‚éó‘Ô
+    # git ç®¡ç†ã•ã‚Œã¦ã„ãªã„ãƒ•ã‚¡ã‚¤ãƒ«ãŒã‚ã‚‹çŠ¶æ…‹
     branch_status="${color}${red}${branch}?"
   elif [[ -n `echo "$st" | grep "^Changes not staged for commit"` ]]; then
-    # git add ‚³‚ê‚Ä‚¢‚È‚¢ƒtƒ@ƒCƒ‹‚ª‚ ‚éó‘Ô
+    # git add ã•ã‚Œã¦ã„ãªã„ãƒ•ã‚¡ã‚¤ãƒ«ãŒã‚ã‚‹çŠ¶æ…‹
     branch_status="${color}${red}${branch}+"
   elif [[ -n `echo "$st" | grep "^Changes to be committed"` ]]; then
-    # git commit ‚³‚ê‚Ä‚¢‚È‚¢ƒtƒ@ƒCƒ‹‚ª‚ ‚éó‘Ô
+    # git commit ã•ã‚Œã¦ã„ãªã„ãƒ•ã‚¡ã‚¤ãƒ«ãŒã‚ã‚‹çŠ¶æ…‹
     branch_status="${color}${yellow}${branch}!"
   elif [[ -n `echo "$st" | grep "^rebase in progress"` ]]; then
-    # ƒRƒ“ƒtƒŠƒNƒg‚ª‹N‚±‚Á‚½ó‘Ô
+    # ã‚³ãƒ³ãƒ•ãƒªã‚¯ãƒˆãŒèµ·ã“ã£ãŸçŠ¶æ…‹
     echo "${color}${red}${branch}!(no branch)${reset}"
     return
   else
-    # ã‹LˆÈŠO‚Ìó‘Ô‚Ìê‡
+    # ä¸Šè¨˜ä»¥å¤–ã®çŠ¶æ…‹ã®å ´åˆ
     branch_status="${color}${blue}${branch}"
   fi
-  # ƒuƒ‰ƒ“ƒ`–¼‚ğF•t‚«‚Å•\¦‚·‚é
+  # ãƒ–ãƒ©ãƒ³ãƒåã‚’è‰²ä»˜ãã§è¡¨ç¤ºã™ã‚‹
   echo "${branch_status}$branch_name${reset}"
 }
  
-# ƒvƒƒ“ƒvƒg‚ª•\¦‚³‚ê‚é‚½‚Ñ‚Éƒvƒƒ“ƒvƒg•¶š—ñ‚ğ•]‰¿A’uŠ·‚·‚é
+# ãƒ—ãƒ­ãƒ³ãƒ—ãƒˆãŒè¡¨ç¤ºã•ã‚Œã‚‹ãŸã³ã«ãƒ—ãƒ­ãƒ³ãƒ—ãƒˆæ–‡å­—åˆ—ã‚’è©•ä¾¡ã€ç½®æ›ã™ã‚‹
 setopt prompt_subst
  
-# ƒvƒƒ“ƒvƒg‚Ì‰E‘¤‚Éƒƒ\ƒbƒh‚ÌŒ‹‰Ê‚ğ•\¦‚³‚¹‚é
+# ãƒ—ãƒ­ãƒ³ãƒ—ãƒˆã®å³å´ã«ãƒ¡ã‚½ãƒƒãƒ‰ã®çµæœã‚’è¡¨ç¤ºã•ã›ã‚‹
 RPROMPT='`rprompt-git-current-branch`'
 
 export LSCOLORS=gxfxxxxxcxxxxxxxxxgxgx
@@ -90,4 +82,3 @@ zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
 alias ls='ls --color'
 alias ll='ls -l'
 alias la='ls -a'
-
