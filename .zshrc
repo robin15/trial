@@ -83,6 +83,7 @@ setopt prompt_subst
 # プロンプトの右側にメソッドの結果を表示させる
 RPROMPT='`rprompt-git-current-branch`'
 
+alias ls='ls --color'
 alias ll='ls -l'
 alias la='ls -a'
 
