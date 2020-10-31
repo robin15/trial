@@ -82,5 +82,5 @@ zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
 alias ls='ls --color'
 alias ll='ls -l'
 alias la='ls -a'
-alias br='beanch'
+alias 'git co'='git checkout'
 
