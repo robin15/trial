@@ -26,6 +26,7 @@ str = "
 </tr>
 
 "
+put "ccc"
 
 puts title.count
 
@@ -41,3 +42,7 @@ puts str
 File.open("foodstuff.html", mode = "w"){|f|
   f.write(str)  # ファイルに書き込む
 }
+
+puts "aaa"
+puts "bbb"
+
