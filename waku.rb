@@ -26,8 +26,8 @@ str = "
 </tr>
 
 "
-put "ccc"
-
+puts "ccc"
+puts "ddd"
 puts title.count
 
 title.each do |item| 
@@ -45,4 +45,5 @@ File.open("foodstuff.html", mode = "w"){|f|
 
 puts "aaa"
 puts "bbb"
+puts "eee"
 
