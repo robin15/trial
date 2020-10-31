@@ -37,6 +37,7 @@ title.each do |item|
 end
 puts str
 
+#file
 File.open("foodstuff.html", mode = "w"){|f|
   f.write(str)  # ファイルに書き込む
 }
