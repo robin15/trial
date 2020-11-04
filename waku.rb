@@ -46,4 +46,5 @@ File.open("foodstuff.html", mode = "w"){|f|
 puts "aaa"
 puts "bbb"
 puts "eee"
+puts "fff"
 
