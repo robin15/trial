@@ -1,80 +1,42 @@
 # install CascadiaCodePL.ttf
 # https://tomiylab.com/2020/03/prompt/
-# ----- PROMPT -----
-## PROMPT
 export CLICOLOR=1
 
 echo hello.
 
 autoload -Uz compinit && compinit  # Gitの補完を有効化
 
+autoload -Uz vcs_info
+setopt prompt_subst
+zstyle ':vcs_info:git:*' check-for-changes true
+zstyle ':vcs_info:git:*' stagedstr "%F{yellow}!"
+zstyle ':vcs_info:git:*' unstagedstr "%F{red}+"
+zstyle ':vcs_info:*' formats "%F{green}%c%u[%b]%f "
+zstyle ':vcs_info:*' actionformats '[%b|%a]'
+precmd () { vcs_info }
+
 function left-prompt {
-  name_t='179m%}'      # user name text clolr
-  name_b='000m%}'    # user name background color
-  path_t='255m%}'     # path text clolr
-  path_b='031m%}'   # path background color
-  arrow='087m%}'   # arrow color
+  name_t='178m%}'            # user name text clolr
+  name_b='236m%}'            # user name background color
+  path_t='255m%}'            # path text clolr
+  path_b='031m%}'            # path background color
   text_color='%{\e[38;5;'    # set text color
   back_color='%{\e[30;48;5;' # set background color
-  reset='%{\e[0m%}'   # reset
-  sharp='\uE0B0'      # triangle
+  reset='%{\e[0m%}'          # reset
+  sharp='\uE0B0'             # triangle
   
   user="${back_color}${name_b}${text_color}${name_t}"
   dir="${back_color}${path_b}${text_color}${path_t}"
-#  echo "${user}%n%#@%m${back_color}${path_b}${text_color}${name_b}${sharp} ${dir}%~${reset}${text_color}${path_b}${sharp}${reset}\n${text_color}${arrow}→ ${reset}"
-  echo "${user}%n%#@%m${back_color}${path_b}${text_color}${name_b}${sharp} ${dir}%~${reset}${text_color}${path_b}${sharp}${reset}"
+  echo "${user}@%m${back_color}${path_b}${text_color}${name_b}${sharp} ${dir}%~${reset}${text_color}${path_b}${sharp}${reset}"
 }
 
-PROMPT=`left-prompt` 
-
-# git ブランチ名を色付きで表示させるメソッド
-function rprompt-git-current-branch {
-  local branch_name st branch_status
-  
-  branch='\ue0a0'
-  color='%{\e[38;5;' #  文字色を設定
-  green='114m%}'
-  red='001m%}'
-  yellow='227m%}'
-  blue='033m%}'
-  reset='%{\e[0m%}'   # reset
-  
-  if [ ! -e  ".git" ]; then
-    # git 管理されていないディレクトリは何も返さない
-    return
-  fi
-  branch_name=`git rev-parse --abbrev-ref HEAD 2> /dev/null`
-  st=`git status 2> /dev/null`
-  if [[ -n `echo "$st" | grep "^nothing to"` ]]; then
-    # 全て commit されてクリーンな状態
-    branch_status="${color}${green}${branch}"
-  elif [[ -n `echo "$st" | grep "^Untracked files"` ]]; then
-    # git 管理されていないファイルがある状態
-    branch_status="${color}${red}${branch}?"
-  elif [[ -n `echo "$st" | grep "^Changes not staged for commit"` ]]; then
-    # git add されていないファイルがある状態
-    branch_status="${color}${red}${branch}+"
-  elif [[ -n `echo "$st" | grep "^Changes to be committed"` ]]; then
-    # git commit されていないファイルがある状態
-    branch_status="${color}${yellow}${branch}!"
-  elif [[ -n `echo "$st" | grep "^rebase in progress"` ]]; then
-    # コンフリクトが起こった状態
-    echo "${color}${red}${branch}!(no branch)${reset}"
-    return
-  else
-    # 上記以外の状態の場合
-    branch_status="${color}${blue}${branch}"
-  fi
-  # ブランチ名を色付きで表示する
-  echo "${branch_status}$branch_name${reset}"
+function branch_status {
+  echo '${vcs_info_msg_0_}'
 }
- 
-# プロンプトが表示されるたびにプロンプト文字列を評価、置換する
+
+PROMPT=`left-prompt``branch_status`
 setopt prompt_subst
  
-# プロンプトの右側にメソッドの結果を表示させる
-RPROMPT='`rprompt-git-current-branch`'
-
 export LSCOLORS=gxfxxxxxcxxxxxxxxxgxgx
 export LS_COLORS='di=01;36:ln=01;35:ex=01;32'
 zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
@@ -82,5 +44,4 @@ zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
 alias ls='ls --color'
 alias ll='ls -l'
 alias la='ls -a'
-alias 'git co'='git checkout'
 
