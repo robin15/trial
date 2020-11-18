@@ -47,7 +47,6 @@ function branch_status {
 }
 
 PROMPT=`left-prompt``branch_status`
-#PROMPT=`left-prompt`
 RPROMPT="%F{white} %D{[%m/%d %H:%M]} %f"
 setopt prompt_subst
 
