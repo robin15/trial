@@ -37,7 +37,6 @@ function left-prompt {
   dir_tri="${text_color}${path_b}${sharp}"
   branch="${back_color}${branch_b}${text_color}${branch_t}${vcs_info_msg_0_}"
   branch_tri="${text_color}${branch_b}${sharp}"
-#  echo "${host}@%m ${back_color}${name_t}${text_color}${path_b}${sharp} ${dir}%~ ${reset}${text_color}${name_t}${sharp}${reset}"
 #  echo "${host} ${reset}${host_tri} ${reset}${dir} ${reset}${dir_tri} ${reset}${branch}${reset}${branch_tri}"
 #  echo "${host} ${reset}${host_tri} ${reset}${dir} ${reset}${dir_tri} ${reset}${vcs_info_msg_0_}"
   echo "${host}${reset}${host_tri}${reset}${dir}${reset}${dir_tri}${reset} "
