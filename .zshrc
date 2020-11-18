@@ -22,10 +22,10 @@ zstyle ':vcs_info:*' actionformats '[%b|%a]'
 precmd () { vcs_info }
 
 function left-prompt {
-  host_b='031m%}'            # host background color
-  host_t='236m%}'            # host text cololr
-  path_b='179m%}'            # path name text cololr
-  path_t='236m%}'            # path name background color
+  host_b='236m%}'            # host background color
+  host_t='178m%}'            # host text cololr
+  path_b='178m%}'            # path name text cololr
+  path_t='000m%}'            # path name background color
   back_color='%{\e[30;48;5;' # set background color
   text_color='%{\e[38;5;'    # set text color
   reset='%{\e[0m%}'          # reset
@@ -40,7 +40,7 @@ function left-prompt {
 #  echo "${host}@%m ${back_color}${name_t}${text_color}${path_b}${sharp} ${dir}%~ ${reset}${text_color}${name_t}${sharp}${reset}"
 #  echo "${host} ${reset}${host_tri} ${reset}${dir} ${reset}${dir_tri} ${reset}${branch}${reset}${branch_tri}"
 #  echo "${host} ${reset}${host_tri} ${reset}${dir} ${reset}${dir_tri} ${reset}${vcs_info_msg_0_}"
-  echo "${host} ${reset}${host_tri} ${reset}${dir} ${reset}${dir_tri}${reset}"
+  echo "${host}${reset}${host_tri}${reset}${dir}${reset}${dir_tri}${reset} "
 }
 
 function branch_status {
