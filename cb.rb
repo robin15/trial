@@ -31,3 +31,5 @@ end
 #
 put "aaa"
 put "aaa"
+puts "fff"
+puts "hhh"
