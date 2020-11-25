@@ -29,6 +29,7 @@ str = "
 puts "ccc"
 puts "ddd"
 puts "fff"
+puts "fff"
 puts title.count
 
 title.each do |item| 
