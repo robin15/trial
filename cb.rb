@@ -28,7 +28,6 @@ if system('exe_html.exe') == nil
 end
 
 #aaaaaa
-#
 put "aaa"
 put "aaa"
 puts "fff"
@@ -37,4 +36,3 @@ puts "ggg"
 puts "iii"
 puts "jjj"
 puts "kkk"
-puts "ppp"
