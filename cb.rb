@@ -31,3 +31,10 @@ end
 #
 put "aaa"
 put "aaa"
+puts "fff"
+puts "hhh"
+puts "ggg"
+puts "iii"
+puts "jjj"
+puts "kkk"
+puts "ppp"
