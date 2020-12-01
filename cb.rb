@@ -2,6 +2,7 @@
 
 #//DOCUMENT/設計情報//aaa.doc
 
+put "kkk"
 require 'win32/clipboard'
 
 p path = ENV['PATH']
