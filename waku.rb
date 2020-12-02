@@ -46,6 +46,7 @@ File.open("foodstuff.html", mode = "w"){|f|
   f.write(str)  # ファイルに書き込む
 }
 
+
 puts "aaa"
 puts "bbb"
 puts "eee"
