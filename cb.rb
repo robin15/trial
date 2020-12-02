@@ -29,6 +29,7 @@ if system('exe_html.exe') == nil
     puts "error command."
 end
 
+
 #aaaaaa
 put "aaa"
 put "aaa"
