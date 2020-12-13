@@ -59,7 +59,7 @@ function rprompt-git-current-branch {
 }
 
 # プロンプトが表示されるたびにプロンプト文字列を評価、置換する
-#setopt prompt_subst
+setopt prompt_subst
 
 PROMPT='`left-prompt``rprompt-git-current-branch`'
 RPROMPT="%F{white} %D{[%m/%d %H:%M]} %f"
