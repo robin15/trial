@@ -11,9 +11,9 @@ sharp='\uE0B0'             # triangle
 reset='%{\e[0m%}'          # reset
 back_color='%{\e[30;48;5;' # set background color
 path_t='000m%}'            # path name background color
-path_b='032m%}'            # path name text cololr
-host_t='032m%}'            # host text cololr
-host_b='236m%}'            # host background color
+path_b='014m%}'            # path name text cololr
+host_t='172m%}'            # host text cololr
+host_b='235m%}'            # host background color
 
 function left-prompt {
   host="${back_color}${host_b}${text_color}${host_t}@%m"
@@ -35,9 +35,9 @@ function rprompt-git-current-branch {
   br_conflict_b='057m%}'         # branch conflict cololr
   branch_icon='\uE0A0'
 
-  if [ ! -e  ".git" ]; then
+  if test -z $(git rev-parse --git-dir 2> /dev/null); then 
     # not git work tree
-    echo "${text_color}${path_b}${sharp} ${reset}"
+    echo "${text_color}${path_b}${sharp}${reset} "
     return
   fi
   branch_name=`git rev-parse --abbrev-ref HEAD 2> /dev/null`
