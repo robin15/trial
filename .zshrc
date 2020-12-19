@@ -28,6 +28,7 @@ function left-prompt {
 # ブランチ名を色付きで表示させるメソッド
 function rprompt-git-current-branch {
   local branch_name st branch_status
+  local val
   br_clean_b='040m%}'            # branch clean cololr
   br_untracked_b='009m%}'        # branch Untracked cololr
   br_preadd_b='009m%}'           # branch preadd cololr
@@ -35,7 +36,10 @@ function rprompt-git-current-branch {
   br_conflict_b='057m%}'         # branch conflict cololr
   branch_icon='\uE0A0'
 
-  if test -z $(git rev-parse --git-dir 2> /dev/null); then 
+
+  val=`git rev-parse --abbrev-ref HEAD 2>&1 /dev/null`
+  if [[ $val =~ ^fatal ]]; then
+#  if test -z $(git rev-parse --git-dir 2> /dev/null); then 
     # not git work tree
     echo "${text_color}${path_b}${sharp}${reset} "
     return
