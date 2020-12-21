@@ -23,8 +23,8 @@ text_color='%{\e[38;5;'    # set text color
 sharp='\uE0B0'             # triangle
 reset='%{\e[0m%}'          # reset
 back_color='%{\e[30;48;5;' # set background color
-path_t='000m%}'            # path name background color
-path_b='014m%}'            # path name text cololr
+path_t='255m%}'            # path name background color
+path_b='025m%}'            # path name text cololr
 host_t='172m%}'            # host text cololr
 host_b='235m%}'            # host background color
 
