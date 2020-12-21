@@ -5,6 +5,19 @@ export CLICOLOR=1
 echo hello.
 
 autoload -Uz compinit && compinit  # Gitの補完を有効化
+autoload -Uz vcs_info
+setopt prompt_subst
+zstyle ':vcs_info:git:*' check-for-changes true
+zstyle ':vcs_info:git:*' stagedstr '+'
+zstyle ':vcs_info:git:*' unstagedstr '!'
+zstyle ':vcs_info:*' formats '%u' '%c' '%b'
+zstyle ':vcs_info:*' actionformats '[%b|%a]'
+
+precmd () { 
+  branch_name=""
+  LANG=en_US.UTF-8 vcs_info
+  [[ -n "$vcs_info_msg_0_" ]] && branch_name="${vcs_info_msg_0_}"
+}
 
 text_color='%{\e[38;5;'    # set text color
 sharp='\uE0B0'             # triangle
@@ -25,10 +38,8 @@ function left-prompt {
   echo "${host}${reset}${host_tri}${reset}${dir}${reset}"
 }
 
-# ブランチ名を色付きで表示させるメソッド
 function rprompt-git-current-branch {
-  local branch_name st branch_status
-  local val
+  local st branch_status
   br_clean_b='040m%}'            # branch clean cololr
   br_untracked_b='009m%}'        # branch Untracked cololr
   br_preadd_b='009m%}'           # branch preadd cololr
@@ -36,33 +47,29 @@ function rprompt-git-current-branch {
   br_conflict_b='057m%}'         # branch conflict cololr
   branch_icon='\uE0A0'
 
-
-  val=`git rev-parse --abbrev-ref HEAD 2>&1 /dev/null`
-  if [[ $val =~ ^fatal ]]; then
-#  if test -z $(git rev-parse --git-dir 2> /dev/null); then 
+  if test -z $(git rev-parse --git-dir 2> /dev/null); then 
     # not git work tree
     echo "${text_color}${path_b}${sharp}${reset} "
     return
   fi
   branch_name=`git rev-parse --abbrev-ref HEAD 2> /dev/null`
   st=`git status 2> /dev/null`
-  if [[ -n `echo "$st" | grep "^nothing to"` ]]; then
-    branch_status="${br_clean_b}"     # clean
-  elif [[ -n `echo "$st" | grep "^Untracked files"` ]]; then
-    branch_status="${br_untracked_b}" # untracked
-  elif [[ -n `echo "$st" | grep "^Changes not staged for commit"` ]]; then
+
+  if [[ -n "$vcs_info_msg_0_" ]]; then
     branch_status="${br_preadd_b}"    # before add
-  elif [[ -n `echo "$st" | grep "^Changes to be committed"` ]]; then
+  elif [[ -n "$vcs_info_msg_1_" ]]; then
     branch_status="${br_precommit_b}" # before commit
+  elif [[ -n `echo "$st" | grep "^nothing to"` ]]; then
+    branch_status="${br_clean_b}" # conflicted
   elif [[ -n `echo "$st" | grep "^rebase in progress"` ]]; then
-    branch_status="${br_conflict_b}"  # conflicted
+    branch_status="${br_conflict_b}" # conflicted
+  elif [[ -n `git status 2> /dev/null | grep "^Untracked files"` ]]; then
+    branch_status="${br_untracked_b}" # untracked
   else
     branch_status="${br_conflict_b}"  # anything else
   fi
   echo "${back_color}${branch_status}${text_color}${path_b}${sharp}${reset}${back_color}${branch_status}${text_color}${host_b} ${branch_icon}${branch_name}${reset}${back_color}${host_b}${text_color}${branch_status}${sharp} ${reset}"
 }
-
-# プロンプトが表示されるたびにプロンプト文字列を評価、置換する
 setopt prompt_subst
 
 PROMPT='`left-prompt``rprompt-git-current-branch`'
