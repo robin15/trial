@@ -40,7 +40,7 @@ function left-prompt {
 
 function rprompt-git-current-branch {
   local st branch_status
-  br_clean_b='040m%}'            # branch clean cololr
+  br_clean_b='035m%}'            # branch clean cololr
   br_untracked_b='009m%}'        # branch Untracked cololr
   br_preadd_b='009m%}'           # branch preadd cololr
   br_precommit_b='178m%}'        # branch precommit cololr
