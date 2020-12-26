@@ -27,6 +27,7 @@ path_t='255m%}'            # path name background color
 path_b='025m%}'            # path name text cololr
 host_t='000m%}'            # host text cololr
 host_b='145m%}'            # host background color
+white='000m%}'
 black='255m%}'
 glay='235m%}'
 
@@ -41,7 +42,7 @@ function left-prompt {
 }
 
 function rprompt-git-current-branch {
-  local st branch_status
+  local st branch_status branch_text
   br_clean_b='035m%}'            # branch clean cololr
   br_untracked_b='009m%}'        # branch Untracked cololr
   br_preadd_b='009m%}'           # branch preadd cololr
@@ -57,12 +58,15 @@ function rprompt-git-current-branch {
 
   if [[ -n "$vcs_info_msg_0_" ]]; then
     branch_status="${br_preadd_b}"
+    branch_text="${black}"
   elif [[ -n "$vcs_info_msg_1_" ]]; then
     branch_status="${br_precommit_b}"
+    branch_text="${white}"
   else
     branch_status="${br_clean_b}"
+    branch_text="${white}"
   fi
-  echo "${back_color}${branch_status}${text_color}${path_b}${sharp}${reset}${back_color}${branch_status}${text_color}${host_t} ${vcs_info_msg_2_}${reset}${back_color}${glay}${text_color}${branch_status}${sharp} ${reset}"
+  echo "${back_color}${branch_status}${text_color}${path_b}${sharp}${reset}${back_color}${branch_status}${text_color}${branch_text} ${vcs_info_msg_2_}${reset}${back_color}${glay}${text_color}${branch_status}${sharp} ${reset}"
 }
 setopt prompt_subst
 
