@@ -13,10 +13,10 @@ autoload -Uz vcs_info
 setopt prompt_subst
 zstyle ':vcs_info:*' max-exports 3
 zstyle ':vcs_info:git:*' check-for-changes true
-zstyle ':vcs_info:git:*' stagedstr "!"
-zstyle ':vcs_info:git:*' unstagedstr "+"
+zstyle ':vcs_info:git:*' stagedstr "s"
+zstyle ':vcs_info:git:*' unstagedstr "u"
 zstyle ':vcs_info:*' formats "%u" "%c" "`branch_icon`%b%f"
-zstyle ':vcs_info:*' actionformats '[%b|%a]'
+zstyle ':vcs_info:*' actionformats 'c'
 precmd () { LANG=en_US.UTF-8 vcs_info }
 
 text_color='%{\e[38;5;'    # set text color
@@ -56,10 +56,13 @@ function rprompt-git-current-branch {
     return
   fi
 
-  if [[ -n "$vcs_info_msg_0_" ]]; then
+  if [[ "$vcs_info_msg_0_" =~ ^u ]]; then
     branch_status="${br_preadd_b}"
     branch_text="${black}"
-  elif [[ -n "$vcs_info_msg_1_" ]]; then
+  elif [[ "$vcs_info_msg_0_" =~ ^c ]]; then
+    branch_status="${br_conflict_b}"
+    branch_text="${white}"
+  elif [[ "$vcs_info_msg_1_" =~ ^s ]]; then
     branch_status="${br_precommit_b}"
     branch_text="${white}"
   else
