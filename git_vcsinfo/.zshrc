@@ -4,20 +4,20 @@ export CLICOLOR=1
 
 echo hello.
 
+function branch_icon {
+  echo '\uE0A0'
+}
+
 autoload -Uz compinit && compinit  # Gitの補完を有効化
 autoload -Uz vcs_info
 setopt prompt_subst
+zstyle ':vcs_info:*' max-exports 3
 zstyle ':vcs_info:git:*' check-for-changes true
-zstyle ':vcs_info:git:*' stagedstr '+'
-zstyle ':vcs_info:git:*' unstagedstr '!'
-zstyle ':vcs_info:*' formats '%u' '%c' '%b'
+zstyle ':vcs_info:git:*' stagedstr "!"
+zstyle ':vcs_info:git:*' unstagedstr "+"
+zstyle ':vcs_info:*' formats "%u" "%c" "`branch_icon`%b%f"
 zstyle ':vcs_info:*' actionformats '[%b|%a]'
-
-precmd () { 
-  branch_name=""
-  LANG=en_US.UTF-8 vcs_info
-  [[ -n "$vcs_info_msg_0_" ]] && branch_name="${vcs_info_msg_0_}"
-}
+precmd () { LANG=en_US.UTF-8 vcs_info }
 
 text_color='%{\e[38;5;'    # set text color
 sharp='\uE0B0'             # triangle
@@ -25,8 +25,10 @@ reset='%{\e[0m%}'          # reset
 back_color='%{\e[30;48;5;' # set background color
 path_t='255m%}'            # path name background color
 path_b='025m%}'            # path name text cololr
-host_t='172m%}'            # host text cololr
-host_b='235m%}'            # host background color
+host_t='000m%}'            # host text cololr
+host_b='145m%}'            # host background color
+black='255m%}'
+glay='235m%}'
 
 function left-prompt {
   host="${back_color}${host_b}${text_color}${host_t}@%m"
@@ -47,28 +49,20 @@ function rprompt-git-current-branch {
   br_conflict_b='057m%}'         # branch conflict cololr
   branch_icon='\uE0A0'
 
-  if test -z $(git rev-parse --git-dir 2> /dev/null); then 
+  if [[ -z ${vcs_info_msg_2_} ]]; then
     # not git work tree
     echo "${text_color}${path_b}${sharp}${reset} "
     return
   fi
-  branch_name=`git rev-parse --abbrev-ref HEAD 2> /dev/null`
-  st=`git status 2> /dev/null`
 
   if [[ -n "$vcs_info_msg_0_" ]]; then
-    branch_status="${br_preadd_b}"    # before add
+    branch_status="${br_preadd_b}"
   elif [[ -n "$vcs_info_msg_1_" ]]; then
-    branch_status="${br_precommit_b}" # before commit
-  elif [[ -n `echo "$st" | grep "^nothing to"` ]]; then
-    branch_status="${br_clean_b}" # conflicted
-  elif [[ -n `echo "$st" | grep "^rebase in progress"` ]]; then
-    branch_status="${br_conflict_b}" # conflicted
-  elif [[ -n `git status 2> /dev/null | grep "^Untracked files"` ]]; then
-    branch_status="${br_untracked_b}" # untracked
+    branch_status="${br_precommit_b}"
   else
-    branch_status="${br_conflict_b}"  # anything else
+    branch_status="${br_clean_b}"
   fi
-  echo "${back_color}${branch_status}${text_color}${path_b}${sharp}${reset}${back_color}${branch_status}${text_color}${host_b} ${branch_icon}${branch_name}${reset}${back_color}${host_b}${text_color}${branch_status}${sharp} ${reset}"
+  echo "${back_color}${branch_status}${text_color}${path_b}${sharp}${reset}${back_color}${branch_status}${text_color}${host_t} ${vcs_info_msg_2_}${reset}${back_color}${glay}${text_color}${branch_status}${sharp} ${reset}"
 }
 setopt prompt_subst
 
