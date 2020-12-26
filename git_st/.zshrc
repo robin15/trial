@@ -25,8 +25,10 @@ reset='%{\e[0m%}'          # reset
 back_color='%{\e[30;48;5;' # set background color
 path_t='255m%}'            # path name background color
 path_b='025m%}'            # path name text cololr
-host_t='172m%}'            # host text cololr
-host_b='235m%}'            # host background color
+host_t='000m%}'            # host text cololr
+host_b='145m%}'            # host background color
+black='255m%}'
+glay='235m%}'
 
 function left-prompt {
   host="${back_color}${host_b}${text_color}${host_t}@%m"
@@ -68,7 +70,7 @@ function rprompt-git-current-branch {
   else
     branch_status="${br_conflict_b}"  # anything else
   fi
-  echo "${back_color}${branch_status}${text_color}${path_b}${sharp}${reset}${back_color}${branch_status}${text_color}${host_b} ${branch_icon}${branch_name}${reset}${back_color}${host_b}${text_color}${branch_status}${sharp} ${reset}"
+  echo "${back_color}${branch_status}${text_color}${path_b}${sharp}${reset}${back_color}${branch_status}${text_color}${glay} ${branch_icon}${branch_name}${reset}${back_color}${glay}${text_color}${branch_status}${sharp} ${reset}"
 }
 setopt prompt_subst
 
