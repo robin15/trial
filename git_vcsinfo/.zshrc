@@ -67,7 +67,7 @@ function rprompt-git-current-branch {
     branch_text="${white}"
   else
     branch_status="${br_clean_b}"
-    branch_text="${white}"
+    branch_text="${black}"
   fi
   echo "${back_color}${branch_status}${text_color}${path_b}${sharp}${reset}${back_color}${branch_status}${text_color}${branch_text} ${vcs_info_msg_2_}${reset}${back_color}${glay}${text_color}${branch_status}${sharp} ${reset}"
 }
