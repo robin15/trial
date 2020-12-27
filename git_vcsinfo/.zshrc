@@ -25,11 +25,12 @@ reset='%{\e[0m%}'          # reset
 back_color='%{\e[30;48;5;' # set background color
 path_t='255m%}'            # path name background color
 path_b='025m%}'            # path name text cololr
-host_t='000m%}'            # host text cololr
-host_b='145m%}'            # host background color
+host_t='253m%}'            # host text cololr
+host_b='130m%}'            # host background color
 white='000m%}'
 black='255m%}'
 glay='235m%}'
+yellow='227m%}'
 
 function left-prompt {
   host="${back_color}${host_b}${text_color}${host_t}@%m"
@@ -45,10 +46,11 @@ function rprompt-git-current-branch {
   local st branch_status branch_text
   br_clean_b='035m%}'            # branch clean cololr
   br_untracked_b='009m%}'        # branch Untracked cololr
-  br_preadd_b='009m%}'           # branch preadd cololr
+  br_preadd_b='161m%}'           # branch preadd cololr
   br_precommit_b='178m%}'        # branch precommit cololr
   br_conflict_b='057m%}'         # branch conflict cololr
   branch_icon='\uE0A0'
+  br_text='234m%}'
 
   if [[ -z ${vcs_info_msg_2_} ]]; then
     # not git work tree
@@ -67,7 +69,7 @@ function rprompt-git-current-branch {
     branch_text="${white}"
   else
     branch_status="${br_clean_b}"
-    branch_text="${black}"
+    branch_text="${br_text}"
   fi
   echo "${back_color}${branch_status}${text_color}${path_b}${sharp}${reset}${back_color}${branch_status}${text_color}${branch_text} ${vcs_info_msg_2_}${reset}${back_color}${glay}${text_color}${branch_status}${sharp} ${reset}"
 }
