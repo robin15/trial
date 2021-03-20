@@ -20,7 +20,7 @@ pipeline {
                         echo "Hello, bitwiseman!"
                         archiveArtifacts "result.txt"
                     } else {
-                        echo "....."
+                        echo ".....(Silence)"
                         archiveArtifacts "result.txt"
                     }
                 }
