@@ -2,7 +2,7 @@ pipeline {
     agent any
     parameters {
         choice(
-            choices: ['PatternA' , 'PatternB'],
+            choices: ['greeting' , 'silence'],
             description: '',
             name: 'REQUESTED_ACTION')
     }
@@ -11,25 +11,21 @@ pipeline {
         stage('Run script with pipes') {
             steps {
                 sh "echo testtesttest > result.txt"
-            }a
+            }
         }
         stage ('Speak') {
-            when {
-                expression { params.REQUESTED_ACTION == 'PatternA' }
-            }
             steps {
-                echo "Hello, bitwiseman!"
-                archiveArtifacts "result.txt"
-            }
-        }
-        stage ('Silence') {
-            when {
-                expression { params.REQUESTED_ACTION == 'PatternB' }
-            }
-            steps {
-                echo "..."
-                archiveArtifacts "result.txt"
+                script {
+                    if ( params.REQUESTED_ACTION == 'greeting' ) {
+                        echo "Hello, bitwiseman!"
+                        archiveArtifacts "result.txt"
+                    } else {
+                        echo "....."
+                        archiveArtifacts "result.txt"
+                    }
+                }
             }
         }
     }
 }
+
