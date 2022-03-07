@@ -1,0 +1,42 @@
+pipeline {
+    agent slave
+    parameters {
+        choice(
+            name: 'USER'
+            choices: ['aaa' , 'bbb'],
+            description: '',
+        )   
+        string(
+            name: 'DATE',
+            defaultValue: '',
+            description: 'YYYY/MM/DD'
+        )
+    }
+    stages {
+        stage('Clean') {
+            steps {
+                sh "rm *.txt"
+            }
+        }
+        stage('Output') {
+            steps {
+                sh "python3 jirarepo.py " + param.USER + " " + param.DATE
+            }
+        }
+        stage ('Archive') {
+            steps {
+                archiveArtifacts "*.txt"
+            }
+        }
+        stage ('Backup') {
+            steps {
+                sh "cp *.txt ./backup"
+            }
+        }
+        stage ('Submit') {
+            steps {
+                build job: 'transfer report'                 
+            }
+        }
+    }
+}
