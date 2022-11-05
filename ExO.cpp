@@ -58,18 +58,3 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     return 0;
 }
 
-/*
-
-◆同一コピーチェック
-char クリップボードlatest
-char クリップボード
-
-◆ファイルパスvalidation
-char クリップボード
-char "\\\\"
-
-◆アクティブwindowチェック
-char クリップボード
-WCHAR ウィンドウタイトル（☆ WCHAR->char変換？）
-
-*/
