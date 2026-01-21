@@ -1,0 +1,75 @@
+
+.markdown-preview.markdown-preview {
+    /* 1. 全体の背景色と文字色 (main.css :root/dark より) */
+    background-color: #373746 !important;
+    color: #cdd6f4 !important;
+    
+    /* 2. フォント設定 (JetBrains Monoを優先) */
+    font-family: 'JetBrains Mono', 'Fira Code', 'Source Code Pro', Consolas, "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", monospace !important;
+    line-height: 1.7;
+    strong, b {
+        color: #ffffff !important;
+        font-weight: bold;
+    }
+
+    /* 3. 見出しレベル別の色 (main.css 変数定義より) */
+    h1 { color: #f38ba8 !important; border-bottom: 2px solid #585b70 !important; }
+    h2 { color: #fab387 !important; border-bottom: 1px solid #585b70 !important; }
+    h3 { color: #f9e2af !important; }
+    h4 { color: #a6e3a1 !important; }
+    h5 { color: #89b4fa !important; }
+    h6 { color: #cba6f7 !important; }
+
+    /* 4. 各種要素の配色移植 */
+    
+    /* リンク */
+    a { color: #89b4fa !important; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* コードブロック・インラインコード */
+    code {
+        background-color: #313244 !important; /* bg-secondary */
+        color: #f9e2af !important;           /* accent-yellow相当 */
+        padding: 0.15rem 0.4rem;
+        border-radius: 3px;
+    }
+    pre {
+        background-color: #313244 !important; /* bg-secondary */
+        border: 1px solid #585b70 !important; /* border */
+        border-radius: 6px;
+    }
+
+    pre code {
+        background-color: transparent !important;
+        color: #cdd6f4 !important;            /* text-primary */
+    }
+
+    /* 引用文 (Blockquote) */
+    blockquote {
+        color: #a6adc8 !important;            /* text-secondary */
+        border-left: 4px solid #89b4fa !important; /* accent */
+        background: rgba(49, 50, 68, 0.5) !important;
+    }
+
+    /* テーブル */
+    table th { background-color: #313244 !important; }
+    table tr, table td, table th {
+        border: 1px solid #585b70 !important;
+    }
+    table tr { background-color: #1e1e2e !important; }
+    table tr:nth-child(2n) { background-color: #313244 !important; }
+
+    /* テーブルの1行目（見出し）の文字色を強制的に明るくする */
+    table thead tr th,
+    table th {
+        color: #ffffff !important;           /* 明るい白 */
+        background-color: #313244 !important; /* mdvimのbg-secondary */
+    }
+
+    /* 水平線 */
+    hr {
+        background-color: #585b70 !important;
+        height: 1px !important;
+        border: none !important;
+    }
+}
